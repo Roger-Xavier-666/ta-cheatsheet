@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EDF0F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11161B" media="(prefers-color-scheme: dark)">
+<title>合金表征课助教速查</title>
+<style>
+/* Layout: one phone-first reading column (max 720px). A sticky bar holds search and section chips; sections stack below it. */
+:root{
+  --bg:#EDF0F2;
+  --surface:#FFFFFF;
+  --fg:#15202B;
+  --muted:#5A6673;
+  --line:#D2D9DF;
+  --accent:#2B5191;
+  --accent-soft:#DEE7F5;
+  --on-accent:#FFFFFF;
+  --warn:#A13828;
+  --warn-soft:#F6E3DE;
+  --mark:#F1E1AE;
+  --f-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --f-en:"Noto Serif","Charis SIL","Doulos SIL",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161B; --surface:#192027; --fg:#E5EAEE; --muted:#97A3AF; --line:#2A343E;
+    --accent:#93B2EA; --accent-soft:#1F2C43; --on-accent:#0F1620;
+    --warn:#F09482; --warn-soft:#3A201B; --mark:#4B3E19;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11161B; --surface:#192027; --fg:#E5EAEE; --muted:#97A3AF; --line:#2A343E;
+  --accent:#93B2EA; --accent-soft:#1F2C43; --on-accent:#0F1620;
+  --warn:#F09482; --warn-soft:#3A201B; --mark:#4B3E19;
+  color-scheme:dark;
+}
+
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.65}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.inner{max-width:720px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+
+/* Header */
+.top .inner{padding-block:28px 18px}
+.course{font-family:var(--f-en);font-style:italic;color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 10px;text-wrap:balance}
+h1{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.2;margin:0;letter-spacing:.02em;text-wrap:balance}
+.date{margin:6px 0 0;color:var(--muted);font-size:14px}
+.fills{margin-top:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fills label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;letter-spacing:.04em}
+.fill-note{grid-column:1/-1;margin:0;font-size:12.5px;color:var(--muted)}
+input[type="text"],input[type="search"]{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+input::placeholder{color:var(--muted);opacity:.8}
+
+/* Sticky bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .inner{padding-block:10px 0}
+.chips{position:relative;display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips a{flex:none;font-size:14px;color:var(--fg);text-decoration:none;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.chips a.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* Sections */
+main.inner{padding-block:4px 56px}
+section{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 116px);padding-top:30px}
+.sh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.sh h2{font-family:var(--f-display);font-size:22px;font-weight:700;margin:0;line-height:1.3}
+.tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h3{font-size:15px;font-weight:700;margin:22px 0 8px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+p{margin:0 0 8px}
+.note{font-size:13px;color:var(--muted);margin:10px 0 0}
+.empty{margin:28px 0 0;color:var(--muted)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;list-style:none;margin:0;padding:0}
+.panel > * + *{border-top:1px solid var(--line)}
+.plain{margin:0;padding-left:1.2em}
+.plain li + li{margin-top:4px}
+
+/* Checklists */
+.check label{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;cursor:pointer}
+.check input{margin:4px 0 0;width:18px;height:18px;flex:none;accent-color:var(--accent)}
+.check small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.check input:checked + span{color:var(--muted);text-decoration:line-through}
+.reset{font:inherit;font-size:13px;color:var(--accent);background:none;border:none;padding:10px 0 0;cursor:pointer}
+
+/* Six things to note */
+.six{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 14px}
+.six div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.six b{display:block;font-size:15px}
+.six span{font-family:var(--f-en);font-size:12.5px;color:var(--muted)}
+@media (max-width:440px){ .six{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+
+/* Phrases */
+.ph li{padding:10px 14px}
+.en{font-family:var(--f-en);font-size:16px;line-height:1.5;margin:0}
+.zh{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.en-inline{font-family:var(--f-en)}
+.filled{background:var(--mark);border-radius:3px;padding:0 2px}
+
+/* Techniques */
+.tool{padding:12px 14px}
+.tool .hd{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tool .ab{font-weight:700;color:var(--accent);font-size:16px}
+.tool .cn{font-weight:500}
+.tool .full{font-family:var(--f-en);font-size:12.5px;color:var(--muted);margin:1px 0 4px}
+.tool .en{font-size:15px}
+.kw{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
+.kw li{font-size:12.5px;padding:1px 9px;border-radius:999px;background:var(--accent-soft);color:var(--fg)}
+
+/* Resolution ladder, log scale from 10 μm to 0.05 nm */
+.ladder{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 22px 12px 14px;margin:0 0 6px}
+.ladder .cap-top{font-size:13px;font-weight:700;margin:0 0 6px}
+.lrow{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;height:30px}
+.lname{font-size:13px;font-weight:700}
+.track{position:relative;height:100%;
+  background-image:linear-gradient(var(--line),var(--line)),linear-gradient(var(--line),var(--line)),linear-gradient(var(--line),var(--line)),linear-gradient(var(--line),var(--line)),linear-gradient(var(--line),var(--line)),linear-gradient(var(--line),var(--line));
+  background-size:1px 100%;background-repeat:no-repeat;
+  background-position:0% 0,18.86% 0,37.73% 0,56.59% 0,75.46% 0,94.32% 0}
+.reach{position:absolute;left:0;top:50%;height:6px;width:var(--x);transform:translateY(-50%);background:var(--accent-soft);border-radius:3px}
+.dot{position:absolute;left:var(--x);top:50%;width:10px;height:10px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%)}
+.val{position:absolute;left:var(--x);top:50%;transform:translate(9px,-50%);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.val.l{transform:translate(calc(-100% - 9px),-50%)}
+.axis{position:relative;height:18px;margin:4px 0 0 48px}
+.axis span{position:absolute;left:var(--x);transform:translateX(-50%);font-size:11px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.axis span:first-child{transform:none}
+.ladder figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.55}
+figure{margin:0}
+
+/* Definition rows */
+.dl li{padding:9px 14px;display:flex;flex-wrap:wrap;column-gap:10px;align-items:baseline}
+.dl .t{font-family:var(--f-en);font-weight:600;font-size:15.5px}
+.dl .c{font-weight:500}
+.dl .n{flex-basis:100%;font-size:13px;color:var(--muted);line-height:1.5}
+
+/* Reading aloud */
+.rd li{display:grid;grid-template-columns:6.2em minmax(0,1fr);gap:10px;padding:9px 14px;align-items:baseline}
+.rd .s{font-weight:700;font-variant-numeric:tabular-nums}
+.rd .r{font-family:var(--f-en)}
+.tok{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.tok li{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 9px;font-size:14px}
+.tok b{margin-right:5px}
+.tok span{font-family:var(--f-en)}
+
+/* Pronunciation */
+.terms li{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;padding:9px 14px;align-items:baseline}
+.terms .w{grid-column:1;grid-row:1;font-family:var(--f-en);font-weight:600;font-size:16px}
+.terms .ipa{grid-column:1;grid-row:2;font-family:var(--f-en);color:var(--muted);font-size:14.5px}
+.terms .c{grid-column:2;grid-row:1 / 3;align-self:center;font-weight:500;text-align:right}
+
+.foot{margin-top:36px;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <p class="course">Modern equipment and techniques for investigation of structure and properties of metallic alloys</p>
+    <h1>助教速查卡</h1>
+    <p class="date">周五 10 月 30 日 · 接人、课上记录、课间交流、拍照</p>
+    <div class="fills">
+      <div><label for="in-prof">老师称呼</label><input type="text" id="in-prof" placeholder="例：Professor + 姓" autocomplete="off"></div>
+      <div><label for="in-me">你的名字</label><input type="text" id="in-me" placeholder="英文名" autocomplete="off"></div>
+      <p class="fill-note">填好后，「场景句子」里的空会自动换上。只存在这台设备上。</p>
+    </div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="inner">
+    <label for="q" class="tag" hidden>搜索</label>
+    <input type="search" id="q" placeholder="搜：EBSD、退火、拍照、spell…" autocomplete="off">
+    <nav class="chips" aria-label="分区">
+      <a href="#flow">流程</a>
+      <a href="#notes">记录</a>
+      <a href="#break">课间</a>
+      <a href="#photo">拍照</a>
+      <a href="#basics">基础</a>
+      <a href="#tools">设备</a>
+      <a href="#phrases">句子</a>
+      <a href="#read">读法</a>
+      <a href="#say">发音</a>
+    </nav>
+  </div>
+</div>
+
+<main class="inner">
+
+<!-- 流程 -->
+<section id="flow">
+  <div class="sh"><h2>流程清单</h2><span class="tag">Checklist</span></div>
+
+  <div class="grp">
+    <h3>周三 · 今天</h3>
+    <ul class="panel check">
+      <li class="q"><label><input type="checkbox" data-k="w1"><span>和负责人确认老师全名、职称、单位<small>推文要用，也决定称呼 Professor 还是 Dr.</small></span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="w2"><span>确认酒店名、接人时间、在哪里等、车怎么安排</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="w3"><span>拿到老师的联系方式<small>外国老师常用 WhatsApp、Telegram 或邮件</small></span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="w4"><span>确认教室、上课时间、几点课间休息、学生人数和专业</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="w6"><span>问清推文要几张图、要不要先征得老师同意</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="w7"><span>查老师主页或 Google Scholar，记下 2–3 篇论文题目<small>路上闲聊有话说，也能猜到课上重点讲哪些设备</small></span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="w8"><span>要课件，先把里面的生词查一遍</span></label></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>周四</h3>
+    <ul class="panel check">
+      <li class="q"><label><input type="checkbox" data-k="t1"><span>把「场景句子」出声念两遍</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="t2"><span>测试记录系统<small>英文转写准不准、电量和存储够不够</small></span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="t3"><span>手机开一路录音做备份，先试一下</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="t4"><span>按下面的清单收拾周五要带的东西</span></label></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>周五要带</h3>
+    <ul class="panel check">
+      <li class="q"><label><input type="checkbox" data-k="b1"><span>充电宝</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b2"><span>录音设备</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b3"><span>笔记本和笔</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b4"><span>HDMI / Type-C 转接头</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b5"><span>U 盘，拷一份老师的课件</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b6"><span>翻页笔</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b7"><span>水、雨伞</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="b8"><span>写着学校中文地址的卡片<small>给司机看</small></span></label></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>周五到场</h3>
+    <ul class="panel check">
+      <li class="q"><label><input type="checkbox" data-k="d1"><span>比约好的时间早 10–15 分钟到酒店大堂</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="d2"><span>到教室先试投影、麦克风和翻页笔</span></label></li>
+      <li class="q"><label><input type="checkbox" data-k="d3"><span>开讲前问老师能不能录音、拍照<small>句子在「场景句子 → 请求许可」</small></span></label></li>
+    </ul>
+  </div>
+
+  <button class="reset" id="reset" type="button">清空所有勾选</button>
+</section>
+
+<!-- 记录 -->
+<section id="notes">
+  <div class="sh"><h2>课上记录</h2><span class="tag">Notes</span></div>
+  <p class="q">每讲一种技术，记这 6 项。课后整理和写推文都能直接用。</p>
+  <div class="six q">
+    <div><b>原理</b><span>Principle</span></div>
+    <div><b>测什么</b><span>What it measures</span></div>
+    <div><b>分辨率 / 精度</b><span>Resolution</span></div>
+    <div><b>样品要求</b><span>Sample preparation</span></div>
+    <div><b>优缺点</b><span>Pros and cons</span></div>
+    <div><b>举的例子</b><span>Examples</span></div>
+  </div>
+  <ul class="plain">
+    <li class="q">记下时间戳，课后好对录音。</li>
+    <li class="q">没听清的地方标个「?」，课后补。</li>
+    <li class="q">老师提到的书、论文、软件名，当场记下拼写。</li>
+  </ul>
+</section>
+
+<!-- 课间 -->
+<section id="break">
+  <div class="sh"><h2>课间交流</h2><span class="tag">Breaks</span></div>
+  <ul class="plain">
+    <li class="q">学生用中文问你时，整理成<b>一句背景 + 一句问题</b>，再转述给老师。</li>
+    <li class="q">主动向老师介绍学生，老师知道学生在做什么，会更愿意多聊：<span class="en-inline">She works on aluminum alloys for car bodies.</span></li>
+  </ul>
+  <div class="grp">
+    <h3>冷场时的备用问题</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">Which technique do you use most in your own research?</p><p class="zh">您自己的研究里最常用哪种技术？</p></li>
+      <li class="q"><p class="en">What's the most common mistake students make when preparing samples for EBSD?</p><p class="zh">学生做 EBSD 制样最常犯什么错？</p></li>
+      <li class="q"><p class="en">How do you decide between XRD and EBSD for measuring texture?</p><p class="zh">测织构时，XRD 和 EBSD 怎么选？</p></li>
+      <li class="q"><p class="en">How is machine learning changing materials characterization?</p><p class="zh">机器学习在怎样改变材料表征？</p></li>
+      <li class="q"><p class="en">What advice would you give students who are just starting with electron microscopy?</p><p class="zh">刚开始学电镜的学生，您有什么建议？</p></li>
+    </ul>
+    <p class="note q">更多提问模板在「场景句子 → 课间搭桥」。</p>
+  </div>
+</section>
+
+<!-- 拍照 -->
+<section id="photo">
+  <div class="sh"><h2>拍照</h2><span class="tag">Shot list</span></div>
+  <ul class="panel check">
+    <li class="q"><label><input type="checkbox" data-k="p1"><span>老师讲课的全景<small>把 PPT 标题页或课程名拍进去</small></span></label></li>
+    <li class="q"><label><input type="checkbox" data-k="p2"><span>老师特写<small>抓做手势、指屏幕的瞬间</small></span></label></li>
+    <li class="q"><label><input type="checkbox" data-k="p3"><span>教室全景<small>从后往前拍，显得人多</small></span></label></li>
+    <li class="q"><label><input type="checkbox" data-k="p4"><span>学生听课、记笔记<small>从侧面拍，比较自然</small></span></label></li>
+    <li class="q"><label><input type="checkbox" data-k="p5"><span>课间交流<small>老师和学生讨论的画面最好用</small></span></label></li>
+    <li class="q"><label><input type="checkbox" data-k="p6"><span>结束合影<small>提前和老师说好</small></span></label></li>
+  </ul>
+  <div class="grp">
+    <h3>注意</h3>
+    <ul class="plain">
+      <li class="q">横竖都拍，用连拍挑表情，不开闪光。</li>
+      <li class="q">避开闭眼、喝水的瞬间。</li>
+      <li class="q">有未发表数据的幻灯片不拍特写。</li>
+      <li class="q">不想入镜的学生要避开。</li>
+    </ul>
+  </div>
+  <div class="grp">
+    <h3>推文要记下的信息</h3>
+    <ul class="plain">
+      <li class="q">老师全名、职称、单位</li>
+      <li class="q">上课时间、地点</li>
+      <li class="q">2–3 句核心内容，从笔记里摘</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 基础 -->
+<section id="basics">
+  <div class="sh"><h2>金属学基础</h2><span class="tag">Basics</span></div>
+
+  <div class="grp">
+    <h3>晶体结构 <span class="tag">Crystal structure</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">BCC</span><span class="c">体心立方</span><span class="n">body-centered cubic，如 α-Fe、Cr、W</span></li>
+      <li class="q"><span class="t">FCC</span><span class="c">面心立方</span><span class="n">face-centered cubic，如 Al、Cu、Ni、γ-Fe</span></li>
+      <li class="q"><span class="t">HCP</span><span class="c">密排六方</span><span class="n">hexagonal close-packed，如 Ti、Mg、Zn</span></li>
+      <li class="q"><span class="t">lattice parameter</span><span class="c">晶格常数</span></li>
+      <li class="q"><span class="t">Miller indices</span><span class="c">晶向 / 晶面指数</span><span class="n">如 (111)、[100]</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>缺陷 <span class="tag">Defects</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">vacancy</span><span class="c">空位</span></li>
+      <li class="q"><span class="t">dislocation</span><span class="c">位错</span><span class="n">塑性变形靠位错滑移</span></li>
+      <li class="q"><span class="t">grain boundary</span><span class="c">晶界</span></li>
+      <li class="q"><span class="t">twin</span><span class="c">孪晶</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>相与相图 <span class="tag">Phases</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">phase diagram</span><span class="c">相图</span></li>
+      <li class="q"><span class="t">solid solution</span><span class="c">固溶体</span></li>
+      <li class="q"><span class="t">eutectic</span><span class="c">共晶</span></li>
+      <li class="q"><span class="t">precipitate</span><span class="c">析出相</span><span class="n">从基体（matrix）里析出的第二相</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>铁碳相图 <span class="tag">Fe–C</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">ferrite</span><span class="c">铁素体</span><span class="n">BCC，较软</span></li>
+      <li class="q"><span class="t">austenite</span><span class="c">奥氏体</span><span class="n">FCC，高温相</span></li>
+      <li class="q"><span class="t">cementite</span><span class="c">渗碳体</span><span class="n">Fe₃C，硬而脆</span></li>
+      <li class="q"><span class="t">pearlite</span><span class="c">珠光体</span><span class="n">铁素体和渗碳体交替排列的层片</span></li>
+      <li class="q"><span class="t">martensite</span><span class="c">马氏体</span><span class="n">淬火得到，很硬</span></li>
+      <li class="q"><span class="t">bainite</span><span class="c">贝氏体</span><span class="n">中温转变的产物</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>热处理 <span class="tag">Heat treatment</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">annealing</span><span class="c">退火</span><span class="n">加热后慢冷，软化、消除应力</span></li>
+      <li class="q"><span class="t">quenching</span><span class="c">淬火</span><span class="n">快速冷却</span></li>
+      <li class="q"><span class="t">tempering</span><span class="c">回火</span><span class="n">淬火后再加热，提高韧性</span></li>
+      <li class="q"><span class="t">solution treatment</span><span class="c">固溶处理</span><span class="n">加热让合金元素溶进基体</span></li>
+      <li class="q"><span class="t">aging</span><span class="c">时效</span><span class="n">保温让第二相析出，提高强度</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>强化机制 <span class="tag">Strengthening</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">solid solution strengthening</span><span class="c">固溶强化</span></li>
+      <li class="q"><span class="t">grain refinement</span><span class="c">细晶强化</span><span class="n">Hall–Petch 关系：晶粒越细，强度越高</span></li>
+      <li class="q"><span class="t">precipitation hardening</span><span class="c">析出强化</span></li>
+      <li class="q"><span class="t">work hardening</span><span class="c">加工硬化</span><span class="n">也叫 strain hardening</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>常见合金 <span class="tag">Alloys</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">steel / stainless steel</span><span class="c">钢 / 不锈钢</span></li>
+      <li class="q"><span class="t">aluminum alloys</span><span class="c">铝合金</span><span class="n">常见 2xxx、6xxx、7xxx 系</span></li>
+      <li class="q"><span class="t">titanium alloys</span><span class="c">钛合金</span><span class="n">如 Ti-6Al-4V</span></li>
+      <li class="q"><span class="t">nickel-based superalloys</span><span class="c">镍基高温合金</span><span class="n">γ 基体 + γ′ 析出相</span></li>
+      <li class="q"><span class="t">high-entropy alloys</span><span class="c">高熵合金</span><span class="n">多种主元，接近等原子比</span></li>
+      <li class="q"><span class="t">additive manufacturing</span><span class="c">增材制造</span><span class="n">即金属 3D 打印</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>容易混的性能词 <span class="tag">Properties</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">strength</span><span class="c">强度</span><span class="n">能承受多大的力</span></li>
+      <li class="q"><span class="t">stiffness</span><span class="c">刚度</span><span class="n">多难变形，看 Young's modulus</span></li>
+      <li class="q"><span class="t">hardness</span><span class="c">硬度</span><span class="n">抵抗压入的能力</span></li>
+      <li class="q"><span class="t">toughness</span><span class="c">韧性</span><span class="n">断裂前能吸收多少能量</span></li>
+      <li class="q"><span class="t">ductility</span><span class="c">塑性</span><span class="n">断之前能拉长多少</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 设备 -->
+<section id="tools">
+  <div class="sh"><h2>设备与技术</h2><span class="tag">Techniques</span></div>
+
+  <figure class="ladder q">
+    <p class="cap-top">能看清的最小尺度</p>
+    <div class="lrow"><span class="lname">EDS</span><div class="track"><span class="reach" style="--x:18.86%"></span><span class="dot" style="--x:18.86%"></span><span class="val" style="--x:18.86%">约 1 μm</span></div></div>
+    <div class="lrow"><span class="lname">OM</span><div class="track"><span class="reach" style="--x:32.05%"></span><span class="dot" style="--x:32.05%"></span><span class="val" style="--x:32.05%">约 0.2 μm</span></div></div>
+    <div class="lrow"><span class="lname">EBSD</span><div class="track"><span class="reach" style="--x:47.59%"></span><span class="dot" style="--x:47.59%"></span><span class="val" style="--x:47.59%">约 30 nm</span></div></div>
+    <div class="lrow"><span class="lname">SEM</span><div class="track"><span class="reach" style="--x:75.46%"></span><span class="dot" style="--x:75.46%"></span><span class="val l" style="--x:75.46%">约 1 nm</span></div></div>
+    <div class="lrow"><span class="lname">APT</span><div class="track"><span class="reach" style="--x:85.32%"></span><span class="dot" style="--x:85.32%"></span><span class="val l" style="--x:85.32%">约 0.3 nm</span></div></div>
+    <div class="lrow"><span class="lname">TEM</span><div class="track"><span class="reach" style="--x:94.32%"></span><span class="dot" style="--x:94.32%"></span><span class="val l" style="--x:94.32%">约 0.1 nm</span></div></div>
+    <div class="axis">
+      <span style="--x:0%">10 μm</span>
+      <span style="--x:18.86%">1 μm</span>
+      <span style="--x:37.73%">100 nm</span>
+      <span style="--x:56.59%">10 nm</span>
+      <span style="--x:75.46%">1 nm</span>
+      <span style="--x:94.32%">0.1 nm</span>
+    </div>
+    <figcaption>对数刻度，条越长能看清的东西越小。数值是数量级，具体看设备型号。XRD 不在图上：它测的是整块样品的平均信息；EBSD 和 TEM 测的是局部信息。</figcaption>
+  </figure>
+
+  <div class="grp">
+    <h3>显微与微区成分 <span class="tag">Microscopy</span></h3>
+    <ul class="panel">
+      <li class="tool q">
+        <div class="hd"><span class="ab">OM</span><span class="cn">光学显微镜</span></div>
+        <p class="full">optical microscopy</p>
+        <p class="en">Reveals grain size and phases at the micron scale.</p>
+        <ul class="kw"><li>cutting 切割</li><li>mounting 镶嵌</li><li>grinding 磨</li><li>polishing 抛光</li><li>etching 腐蚀</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">SEM</span><span class="cn">扫描电镜</span></div>
+        <p class="full">scanning electron microscopy</p>
+        <p class="en">Images surface morphology at the nanometer scale.</p>
+        <ul class="kw"><li>SE 二次电子：看形貌</li><li>BSE 背散射电子：看成分衬度</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">EDS / WDS</span><span class="cn">能谱 / 波谱</span></div>
+        <p class="full">energy- / wavelength-dispersive X-ray spectroscopy</p>
+        <p class="en">Measures local chemical composition.</p>
+        <ul class="kw"><li>EDS 快</li><li>WDS 更准</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">EBSD</span><span class="cn">电子背散射衍射</span></div>
+        <p class="full">electron backscatter diffraction</p>
+        <p class="en">Maps grain orientation, texture and grain boundaries.</p>
+        <ul class="kw"><li>IPF map</li><li>pole figure 极图</li><li>misorientation 取向差</li><li>KAM</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">TEM / STEM</span><span class="cn">透射电镜</span></div>
+        <p class="full">(scanning) transmission electron microscopy</p>
+        <p class="en">Shows dislocations, precipitates and atomic structure.</p>
+        <ul class="kw"><li>BF / DF 明场 / 暗场</li><li>SAED 选区衍射</li><li>HRTEM 高分辨</li><li>HAADF 高角环形暗场</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">FIB</span><span class="cn">聚焦离子束</span></div>
+        <p class="full">focused ion beam</p>
+        <p class="en">Cuts site-specific thin samples (lamellae) for TEM.</p>
+        <ul class="kw"><li>lift-out 定点提取</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">APT</span><span class="cn">原子探针</span></div>
+        <p class="full">atom probe tomography</p>
+        <p class="en">Gives 3D atom-by-atom composition.</p>
+        <ul class="kw"><li>needle-shaped specimen 针尖状样品</li></ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>衍射 <span class="tag">Diffraction</span></h3>
+    <ul class="panel">
+      <li class="tool q">
+        <div class="hd"><span class="ab">XRD</span><span class="cn">X 射线衍射</span></div>
+        <p class="full">X-ray diffraction</p>
+        <p class="en">Identifies phases from diffraction peaks.</p>
+        <ul class="kw"><li>Bragg's law</li><li>lattice parameter 晶格常数</li><li>Rietveld refinement 精修</li><li>residual stress 残余应力</li><li>texture 织构</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">Synchrotron / Neutron</span><span class="cn">同步辐射 / 中子衍射</span></div>
+        <p class="full">synchrotron X-ray and neutron diffraction</p>
+        <p class="en">Higher intensity or deeper penetration; good for in-situ tests.</p>
+        <ul class="kw"><li>大科学装置</li><li>原位实验</li></ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>热分析 <span class="tag">Thermal</span></h3>
+    <ul class="panel">
+      <li class="tool q">
+        <div class="hd"><span class="ab">DSC / DTA</span><span class="cn">差示扫描量热 / 差热分析</span></div>
+        <p class="full">differential scanning calorimetry / differential thermal analysis</p>
+        <p class="en">Detect heat released or absorbed during phase transformations.</p>
+        <ul class="kw"><li>相变温度</li><li>析出与溶解</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">TGA</span><span class="cn">热重分析</span></div>
+        <p class="full">thermogravimetric analysis</p>
+        <p class="en">Tracks mass change, for example during oxidation.</p>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">Dilatometry</span><span class="cn">热膨胀仪</span></div>
+        <p class="full">dilatometry</p>
+        <p class="en">Detects phase transformations from changes in length.</p>
+        <ul class="kw"><li>CCT / TTT 曲线</li></ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>力学性能 <span class="tag">Mechanical</span></h3>
+    <ul class="panel">
+      <li class="tool q">
+        <div class="hd"><span class="ab">Tensile test</span><span class="cn">拉伸试验</span></div>
+        <p class="en">Gives yield strength, tensile strength and elongation.</p>
+        <ul class="kw"><li>stress–strain curve 应力-应变曲线</li><li>yield strength 屈服强度</li><li>UTS 抗拉强度</li><li>elongation 伸长率</li><li>Young's modulus 弹性模量</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">Hardness</span><span class="cn">硬度</span></div>
+        <p class="full">Vickers, Rockwell, Brinell</p>
+        <p class="en">Measures resistance to indentation.</p>
+        <ul class="kw"><li>HV 维氏</li><li>HRC 洛氏</li><li>HB 布氏</li></ul>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">Nanoindentation</span><span class="cn">纳米压痕</span></div>
+        <p class="en">Measures hardness and modulus at the micro and nano scale.</p>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">Impact · Fatigue · Creep</span><span class="cn">冲击 · 疲劳 · 蠕变</span></div>
+        <p class="full">Charpy impact test, fatigue test, creep test</p>
+        <p class="en">Test toughness, cyclic loading and long-term loading at high temperature.</p>
+        <ul class="kw"><li>fracture toughness K<sub>IC</sub> 断裂韧性</li></ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>宏观成分与表面 <span class="tag">Composition &amp; surface</span></h3>
+    <ul class="panel">
+      <li class="tool q">
+        <div class="hd"><span class="ab">OES / XRF / ICP</span><span class="cn">直读光谱 / X 射线荧光 / 等离子体光谱</span></div>
+        <p class="full">optical emission spectroscopy / X-ray fluorescence / inductively coupled plasma</p>
+        <p class="en">Measure bulk chemical composition.</p>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">XPS</span><span class="cn">X 射线光电子能谱</span></div>
+        <p class="full">X-ray photoelectron spectroscopy</p>
+        <p class="en">Shows surface chemistry and oxidation states.</p>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">AFM</span><span class="cn">原子力显微镜</span></div>
+        <p class="full">atomic force microscopy</p>
+        <p class="en">Maps surface topography at the nanometer scale.</p>
+      </li>
+      <li class="tool q">
+        <div class="hd"><span class="ab">Corrosion</span><span class="cn">腐蚀测试</span></div>
+        <p class="full">potentiodynamic polarization, EIS</p>
+        <p class="en">Evaluates corrosion resistance.</p>
+        <ul class="kw"><li>动电位极化</li><li>EIS 电化学阻抗谱</li></ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>题目里的 Modern <span class="tag">Trends</span></h3>
+    <ul class="panel dl">
+      <li class="q"><span class="t">in-situ</span><span class="c">原位</span><span class="n">一边加热或拉伸，一边观察</span></li>
+      <li class="q"><span class="t">3D characterization</span><span class="c">三维表征</span><span class="n">FIB-SEM tomography、X-ray CT</span></li>
+      <li class="q"><span class="t">correlative microscopy</span><span class="c">关联显微</span><span class="n">多种手段看同一个区域</span></li>
+      <li class="q"><span class="t">DIC</span><span class="c">数字图像相关</span><span class="n">digital image correlation，测应变场</span></li>
+      <li class="q"><span class="t">machine learning</span><span class="c">机器学习</span><span class="n">自动识别组织、分析数据</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 句子 -->
+<section id="phrases">
+  <div class="sh"><h2>场景句子</h2><span class="tag">Phrases</span></div>
+
+  <div class="grp">
+    <h3>接人和路上</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">Good morning, <span class="fill-prof">Professor ___</span>. I'm <span class="fill-me">___</span>, your teaching assistant today. Welcome to our university!</p><p class="zh">早上好，我是今天的助教，欢迎来我们学校！</p></li>
+      <li class="q"><p class="en">The car is outside. It's about a 20-minute drive to campus.</p><p class="zh">车在外面，到学校大约 20 分钟。</p></li>
+      <li class="q"><p class="en">Did you sleep well? How was your flight?</p><p class="zh">睡得好吗？航班还顺利吗？</p></li>
+      <li class="q"><p class="en">Is this your first time in China?</p><p class="zh">您是第一次来中国吗？</p></li>
+      <li class="q"><p class="en">Do you have everything for the lecture — laptop, adapter, slides?</p><p class="zh">上课要用的电脑、转接头、课件都带了吗？</p></li>
+    </ul>
+    <p class="note q">安全的闲聊话题：天气、吃的、本地景点、老师的研究、以前来没来过中国。</p>
+  </div>
+
+  <div class="grp">
+    <h3>上课前</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">Here's the podium. Shall we test your slides first?</p><p class="zh">这是讲台，先试一下课件？</p></li>
+      <li class="q"><p class="en">This is the clicker, and the mic is wireless — you can clip it on.</p><p class="zh">这是翻页笔，麦克风是无线的，可以夹在衣服上。</p></li>
+      <li class="q"><p class="en">We'll have a ten-minute break at 10:15.</p><p class="zh">10:15 休息十分钟。</p></li>
+      <li class="q"><p class="en">There are about 40 students, mostly master's students in materials science.</p><p class="zh">大约 40 个学生，大多是材料方向的硕士生。</p></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>请求许可</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">Would you mind if I took a few photos for our department's WeChat account?</p><p class="zh">我拍几张照片发学院公众号，可以吗？</p></li>
+      <li class="q"><p class="en">Is it okay if I record the audio? It's just for my notes.</p><p class="zh">我录个音可以吗？只用来整理笔记。</p></li>
+      <li class="q"><p class="en">Could we share your slides with the students afterwards?</p><p class="zh">课后能把课件发给学生吗？</p></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>没听清</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">Sorry, could you spell the name of that technique?</p><p class="zh">那个技术的名字能拼一下吗？</p></li>
+      <li class="q"><p class="en">Could you say that again a little more slowly?</p><p class="zh">能再慢一点说一遍吗？</p></li>
+      <li class="q"><p class="en">Just to make sure I understood — you mean ___, right?</p><p class="zh">我确认一下，您是说___，对吗？</p></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>课间搭桥</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en"><span class="fill-prof">Professor ___</span>, this is ___. He's working on titanium alloys and has a question about ___.</p><p class="zh">这位是___，做钛合金的，想问___。</p></li>
+      <li class="q"><p class="en">Let me translate. She's asking whether ___.</p><p class="zh">我翻译一下，她想问___。</p></li>
+      <li class="q"><p class="en">In short, he wants to know how to ___.</p><p class="zh">简单说，他想知道怎么___。</p></li>
+    </ul>
+    <h3>给学生的提问模板</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">In your experience, which technique is best for ___?</p><p class="zh">按您的经验，___用哪种技术最好？</p></li>
+      <li class="q"><p class="en">What's the main limitation of ___?</p><p class="zh">___的主要局限是什么？</p></li>
+      <li class="q"><p class="en">How should we prepare samples for ___?</p><p class="zh">做___的样品该怎么制备？</p></li>
+      <li class="q"><p class="en">Could you explain a bit more about ___?</p><p class="zh">能再多讲讲___吗？</p></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>转移话题</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">That's an interesting point. By the way, have you tried ___ yet?</p><p class="zh">有意思。对了，您尝过___了吗？</p></li>
+      <li class="q"><p class="en">Maybe we can leave that for another time. Speaking of ___, …</p><p class="zh">这个下次再聊吧。说到___……</p></li>
+    </ul>
+    <p class="note q">闲聊时换个话题用。</p>
+  </div>
+
+  <div class="grp">
+    <h3>下课以后</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">Thank you for the wonderful lecture. The students really enjoyed it.</p><p class="zh">谢谢您精彩的讲课，同学们很喜欢。</p></li>
+      <li class="q"><p class="en">Could we take a group photo before you leave?</p><p class="zh">走之前能拍张合影吗？</p></li>
+      <li class="q"><p class="en">I'll take you back to the hotel. Is there anything else you need?</p><p class="zh">我送您回酒店，还需要什么吗？</p></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>课上常听到的说法</h3>
+    <ul class="panel ph">
+      <li class="q"><p class="en">As shown in this micrograph / map / pattern, …</p><p class="zh">如这张显微照片 / 分布图 / 衍射花样所示……</p></li>
+      <li class="q"><p class="en">This peak corresponds to the ___ phase.</p><p class="zh">这个峰对应___相。</p></li>
+      <li class="q"><p class="en">The sample was solution-treated at 520 °C for 1 h, followed by water quenching.</p><p class="zh">样品在 520 °C 固溶 1 小时，然后水淬。</p></li>
+      <li class="q"><p class="en">The spatial resolution is about ___.</p><p class="zh">空间分辨率大约是___。</p></li>
+      <li class="q"><p class="en">Compared with ___, this technique is faster but less accurate.</p><p class="zh">和___比，这个技术更快，但没那么准。</p></li>
+      <li class="q"><p class="en">The main drawback / limitation is ___.</p><p class="zh">主要缺点 / 局限是___。</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 读法 -->
+<section id="read">
+  <div class="sh"><h2>符号读法</h2><span class="tag">Reading aloud</span></div>
+  <ul class="panel rd">
+    <li class="q"><span class="s">520 °C</span><span class="r">five hundred and twenty degrees Celsius</span></li>
+    <li class="q"><span class="s">20 kV</span><span class="r">twenty kilovolts</span></li>
+    <li class="q"><span class="s">μm</span><span class="r">micron / micrometer</span></li>
+    <li class="q"><span class="s">nm</span><span class="r">nanometer</span></li>
+    <li class="q"><span class="s">Å</span><span class="r">angstrom</span></li>
+    <li class="q"><span class="s">MPa · GPa</span><span class="r">megapascal · gigapascal</span></li>
+    <li class="q"><span class="s">HV</span><span class="r">Vickers hardness</span></li>
+    <li class="q"><span class="s">wt.% · at.%</span><span class="r">weight percent · atomic percent</span></li>
+    <li class="q"><span class="s">10⁻⁶</span><span class="r">ten to the minus six</span></li>
+    <li class="q"><span class="s">Ti-6Al-4V</span><span class="r">"titanium six-four"</span></li>
+  </ul>
+
+  <div class="grp">
+    <h3>希腊字母</h3>
+    <ul class="tok">
+      <li class="q"><b>α</b><span>alpha</span></li>
+      <li class="q"><b>β</b><span>beta</span></li>
+      <li class="q"><b>γ</b><span>gamma</span></li>
+      <li class="q"><b>γ′</b><span>gamma prime</span></li>
+      <li class="q"><b>δ</b><span>delta</span></li>
+      <li class="q"><b>ε</b><span>epsilon</span></li>
+      <li class="q"><b>θ</b><span>theta</span></li>
+      <li class="q"><b>σ</b><span>sigma</span></li>
+    </ul>
+  </div>
+
+  <div class="grp">
+    <h3>元素</h3>
+    <ul class="tok">
+      <li class="q"><b>Fe</b><span>iron</span></li>
+      <li class="q"><b>Al</b><span>aluminum</span></li>
+      <li class="q"><b>Ti</b><span>titanium</span></li>
+      <li class="q"><b>Ni</b><span>nickel</span></li>
+      <li class="q"><b>Cr</b><span>chromium</span></li>
+      <li class="q"><b>Mo</b><span>molybdenum</span></li>
+      <li class="q"><b>Mn</b><span>manganese</span></li>
+      <li class="q"><b>Mg</b><span>magnesium</span></li>
+      <li class="q"><b>Cu</b><span>copper</span></li>
+      <li class="q"><b>Zn</b><span>zinc</span></li>
+      <li class="q"><b>Co</b><span>cobalt</span></li>
+      <li class="q"><b>V</b><span>vanadium</span></li>
+      <li class="q"><b>Nb</b><span>niobium</span></li>
+      <li class="q"><b>W</b><span>tungsten</span></li>
+      <li class="q"><b>Zr</b><span>zirconium</span></li>
+      <li class="q"><b>Si</b><span>silicon</span></li>
+      <li class="q"><b>C</b><span>carbon</span></li>
+      <li class="q"><b>N</b><span>nitrogen</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 发音 -->
+<section id="say">
+  <div class="sh"><h2>术语发音</h2><span class="tag">Pronunciation</span></div>
+  <ul class="panel terms">
+    <li class="q"><span class="w">alloy</span><span class="ipa">/ˈælɔɪ/ 名词重音在前</span><span class="c">合金</span></li>
+    <li class="q"><span class="w">austenite</span><span class="ipa">/ˈɔːstənaɪt/</span><span class="c">奥氏体</span></li>
+    <li class="q"><span class="w">martensite</span><span class="ipa">/ˈmɑːrtənzaɪt/</span><span class="c">马氏体</span></li>
+    <li class="q"><span class="w">ferrite</span><span class="ipa">/ˈferaɪt/</span><span class="c">铁素体</span></li>
+    <li class="q"><span class="w">pearlite</span><span class="ipa">/ˈpɜːrlaɪt/</span><span class="c">珠光体</span></li>
+    <li class="q"><span class="w">bainite</span><span class="ipa">/ˈbeɪnaɪt/</span><span class="c">贝氏体</span></li>
+    <li class="q"><span class="w">cementite</span><span class="ipa">/sɪˈmentaɪt/</span><span class="c">渗碳体</span></li>
+    <li class="q"><span class="w">precipitate</span><span class="ipa">名词 /prɪˈsɪpɪtət/ · 动词 /prɪˈsɪpɪteɪt/</span><span class="c">析出相 / 析出</span></li>
+    <li class="q"><span class="w">anneal</span><span class="ipa">/əˈniːl/</span><span class="c">退火</span></li>
+    <li class="q"><span class="w">quench</span><span class="ipa">/kwentʃ/</span><span class="c">淬火</span></li>
+    <li class="q"><span class="w">ductile</span><span class="ipa">/ˈdʌktaɪl/</span><span class="c">有塑性的</span></li>
+    <li class="q"><span class="w">tensile</span><span class="ipa">/ˈtensaɪl/</span><span class="c">拉伸的</span></li>
+    <li class="q"><span class="w">fatigue</span><span class="ipa">/fəˈtiːɡ/</span><span class="c">疲劳</span></li>
+    <li class="q"><span class="w">specimen</span><span class="ipa">/ˈspesɪmən/</span><span class="c">试样</span></li>
+    <li class="q"><span class="w">diffraction</span><span class="ipa">/dɪˈfrækʃən/</span><span class="c">衍射</span></li>
+    <li class="q"><span class="w">lattice</span><span class="ipa">/ˈlætɪs/</span><span class="c">晶格</span></li>
+    <li class="q"><span class="w">dislocation</span><span class="ipa">/ˌdɪsləˈkeɪʃən/</span><span class="c">位错</span></li>
+    <li class="q"><span class="w">tomography</span><span class="ipa">/təˈmɒɡrəfi/</span><span class="c">层析成像</span></li>
+    <li class="q"><span class="w">Vickers</span><span class="ipa">/ˈvɪkərz/</span><span class="c">维氏（硬度）</span></li>
+    <li class="q"><span class="w">Charpy</span><span class="ipa">/ˈʃɑːrpi/ 人名，法语</span><span class="c">夏比（冲击）</span></li>
+    <li class="q"><span class="w">Rietveld</span><span class="ipa">/ˈriːtvelt/ 人名，荷兰语</span><span class="c">Rietveld 精修</span></li>
+  </ul>
+  <p class="note q">口音：题目里 investigation of structure and properties 这种说法，在俄语区和东欧学者中很常见。如果老师来自那边，可能会把 h 读得像 kh，r 读成卷舌音，句子里常省掉冠词。不管老师是哪国人，对着课件听最省力。</p>
+</section>
+
+<p id="empty" class="empty" hidden>没找到。换个词试试，比如英文缩写或中文名。</p>
+<p class="foot">勾选和填写的名字只保存在这台设备的浏览器里。</p>
+</main>
+
+<script>
+(function () {
+  function load(k) { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return {}; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+  // Search
+  var q = document.getElementById("q");
+  var items = Array.prototype.slice.call(document.querySelectorAll("main .q"));
+  var groups = document.querySelectorAll("main .grp");
+  var sections = document.querySelectorAll("main section");
+  var empty = document.getElementById("empty");
+  var resetBtn = document.getElementById("reset");
+  function norm(s) { return s.toLowerCase().replace(/\s+/g, " "); }
+  function runSearch() {
+    var t = norm(q.value.trim());
+    var n = 0;
+    items.forEach(function (el) {
+      var hit = !t || norm(el.textContent).indexOf(t) !== -1;
+      el.hidden = !hit;
+      if (hit) n++;
+    });
+    groups.forEach(function (g) { g.hidden = !!t && !g.querySelector(".q:not([hidden])"); });
+    sections.forEach(function (s) { s.hidden = !!t && !s.querySelector(".q:not([hidden])"); });
+    resetBtn.hidden = !!t;
+    empty.hidden = !t || n > 0;
+    current = -1;
+    spy();
+  }
+  q.addEventListener("input", runSearch);
+
+  // Checklist ticks
+  var ticks = load("ta-ticks");
+  var boxes = document.querySelectorAll('input[type="checkbox"][data-k]');
+  boxes.forEach(function (cb) {
+    cb.checked = !!ticks[cb.dataset.k];
+    cb.addEventListener("change", function () {
+      ticks[cb.dataset.k] = cb.checked;
+      save("ta-ticks", ticks);
+    });
+  });
+  resetBtn.addEventListener("click", function () {
+    boxes.forEach(function (cb) { cb.checked = false; });
+    ticks = {};
+    save("ta-ticks", ticks);
+  });
+
+  // Names filled into the phrases
+  var fills = load("ta-fills");
+  var fields = {
+    prof: { el: document.getElementById("in-prof"), empty: "Professor ___" },
+    me: { el: document.getElementById("in-me"), empty: "___" }
+  };
+  function applyFills() {
+    Object.keys(fields).forEach(function (key) {
+      var v = (fills[key] || "").trim();
+      document.querySelectorAll(".fill-" + key).forEach(function (s) {
+        s.textContent = v || fields[key].empty;
+        s.classList.toggle("filled", !!v);
+      });
+    });
+  }
+  Object.keys(fields).forEach(function (key) {
+    var el = fields[key].el;
+    el.value = fills[key] || "";
+    el.addEventListener("input", function () {
+      fills[key] = el.value;
+      save("ta-fills", fills);
+      applyFills();
+      if (q.value) runSearch();
+    });
+  });
+  applyFills();
+
+  // Highlight the chip for the section in view
+  var bar = document.querySelector(".bar");
+  var chipBox = document.querySelector(".chips");
+  var links = Array.prototype.slice.call(chipBox.querySelectorAll("a"));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+  var current = -1;
+  var ticking = false;
+  function spy() {
+    ticking = false;
+    var line = bar.getBoundingClientRect().bottom + 24;
+    var cur = 0;
+    targets.forEach(function (s, i) {
+      if (s && !s.hidden && s.getBoundingClientRect().top <= line) cur = i;
+    });
+    if (cur === current) return;
+    current = cur;
+    links.forEach(function (a, i) { a.classList.toggle("on", i === cur); });
+    var a = links[cur];
+    if (a.offsetLeft < chipBox.scrollLeft || a.offsetLeft + a.offsetWidth > chipBox.scrollLeft + chipBox.clientWidth) {
+      chipBox.scrollLeft = a.offsetLeft - 8;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(spy); }
+  }, { passive: true });
+  spy();
+})();
+</script>
+</body>
+</html>
